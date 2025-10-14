@@ -1,0 +1,46 @@
+# Initialize git (from root)
+cd lamborghini-fullstack
+git init
+
+# Create .gitignore
+cat > .gitignore << 'EOF'
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment variables
+.env
+*/.env
+
+# Uploads
+backend/uploads/images/*
+backend/uploads/videos/*
+!backend/uploads/images/.gitkeep
+!backend/uploads/videos/.gitkeep
+
+# Build files
+frontend/dist/
+frontend/build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+EOF
+
+# Create .gitkeep files
+touch backend/uploads/images/.gitkeep
+touch backend/uploads/videos/.gitkeep
+
+# Initial commit
+git add .
+git commit -m "Initial commit: Lamborghini full-stack with base architecture"

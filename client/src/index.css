@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-tech-black text-white font-sans antialiased;
+  }
+
+  html, body, #root {
+    @apply h-full w-full;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-tech-blue text-tech-black font-semibold px-6 py-3 rounded-lg hover:bg-tech-blue-dark transition-all duration-300 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-tech-gray text-white font-semibold px-6 py-3 rounded-lg hover:bg-tech-gray-light transition-all duration-300 border border-gray-700;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-700 transition-all duration-300;
+  }
+
+  .input-field {
+    @apply w-full bg-tech-gray border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-tech-blue focus:border-transparent transition-all;
+  }
+
+  .card {
+    @apply bg-tech-gray rounded-xl p-6 border border-gray-800 shadow-xl;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-md bg-opacity-10 border border-gray-700;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-tech-blue to-tech-blue-dark;
+  }
+
+  .responsive-text {
+    font-size: clamp(1rem, 4vw, 3rem);
+  }
+
+  .responsive-text-large {
+    font-size: clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px #FFC107, 0 0 20px #FFC107, 0 0 30px #FFC107;
+  }
+  to {
+    box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-tech-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-tech-gray rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-tech-gray-light;
+}
+
+.loader {
+  border: 3px solid #2A2A2A;
+  border-top: 3px solid #FFC107;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
