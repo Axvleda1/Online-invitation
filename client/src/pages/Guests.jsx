@@ -25,17 +25,17 @@ const Guests = () => {
 
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [filter, setFilter] = useState("all"); // "all" | "going" | "notgoing"
+  const [filter, setFilter] = useState("all"); 
   const [sortKey, setSortKey] = useState("createdAt");
   const [sortDir, setSortDir] = useState("desc");
   const [refreshTick, setRefreshTick] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect screen size
+  
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768); // md breakpoint
+      setIsMobile(window.innerWidth < 768); 
     };
     
     checkScreenSize();
@@ -43,7 +43,7 @@ const Guests = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Debounce search
+  
   const debounceTimer = useRef(null);
   useEffect(() => {
     if (debounceTimer.current) window.clearTimeout(debounceTimer.current);
@@ -55,7 +55,7 @@ const Guests = () => {
     };
   }, [search]);
 
-  // Load guests
+  
   useEffect(() => {
     const fn = async () => {
       try {
@@ -128,14 +128,14 @@ const Guests = () => {
     return list;
   }, [rawGuests, filter, debouncedSearch, sortKey, sortDir]);
 
-  // Pagination logic
-  const itemsPerPage = isMobile ? 10 : 15; // Mobile: 10, Desktop: 15
+  
+  const itemsPerPage = isMobile ? 10 : 15; 
   const totalPages = Math.ceil(filteredGuests.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedGuests = filteredGuests.slice(startIndex, endIndex);
 
-  // Reset to first page when filters change or screen size changes
+  
   useEffect(() => {
     setCurrentPage(1);
   }, [filter, debouncedSearch, sortKey, sortDir, isMobile]);
@@ -230,7 +230,7 @@ const Guests = () => {
 
   return (
     <div className="w-full mx-auto px-3 sm:px-6 lg:px-8 py-6">
-      {/* Sticky top actions */}
+      {}
       <div className=" top-0 z-30 -mx-3 sm:-mx-6 lg:-mx-8 px-3 sm:px-6 lg:px-8 py-3 border-b border-gray-800">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <h1 className="text-2xl sm:text-3xl font-bold text-white">სტუმრები</h1>
@@ -258,7 +258,7 @@ const Guests = () => {
         </div>
       </div>
 
-      {/* Controls */}
+      {}
       <section className="mt-4 bg-gray-800 rounded-xl p-4 sm:p-6 border border-gray-700">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div>
@@ -351,7 +351,6 @@ const Guests = () => {
         </div>
       </section>
 
-      {/* Content */}
       {loading ? (
         <div className="mt-6 bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
           <div className="grid grid-cols-12 px-6 py-3 text-xs uppercase tracking-wider text-gray-400 bg-gray-900/40 sticky top-[64px]">
@@ -381,7 +380,7 @@ const Guests = () => {
         </div>
       ) : (
         <>
-          {/* Mobile cards */}
+          {}
           <ul className="mt-6 space-y-3 md:hidden">
             {paginatedGuests.map((g) => (
               <li key={g._id} className="bg-gray-800 border border-gray-700 rounded-xl p-4">
@@ -434,7 +433,7 @@ const Guests = () => {
             )}
           </ul>
 
-          {/* Desktop table */}
+          {}
           <div className="hidden md:block mt-6 bg-gray-800 rounded-xl border border-gray-700 overflow-x-auto">
             <div className="min-w-[1100px]">
               <div className="grid grid-cols-12 px-6 py-3 text-xs uppercase tracking-wider text-gray-400 bg-gray-900/40 ">
@@ -487,13 +486,13 @@ const Guests = () => {
         </>
       )}
 
-      {/* Pagination */}
+      {}
       {!loading && !error && filteredGuests.length > 0 && (
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
 
           
           <div className="flex items-center gap-2">
-            {/* Previous Button */}
+            {}
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
@@ -502,35 +501,35 @@ const Guests = () => {
               ‹
             </button>
             
-            {/* Page Numbers */}
+            {}
             <div className="flex items-center gap-1">
               {(() => {
                 const pages = [];
                 const maxVisible = 5;
                 
                 if (totalPages <= maxVisible) {
-                  // Show all pages if total is small
+                  
                   for (let i = 1; i <= totalPages; i++) {
                     pages.push(i);
                   }
                 } else {
-                  // Smart pagination logic
+                  
                   if (currentPage <= 3) {
-                    // Show first pages
+                    
                     for (let i = 1; i <= 4; i++) {
                       pages.push(i);
                     }
                     pages.push('...');
                     pages.push(totalPages);
                   } else if (currentPage >= totalPages - 2) {
-                    // Show last pages
+                    
                     pages.push(1);
                     pages.push('...');
                     for (let i = totalPages - 3; i <= totalPages; i++) {
                       pages.push(i);
                     }
                   } else {
-                    // Show middle pages
+                    
                     pages.push(1);
                     pages.push('...');
                     for (let i = currentPage - 1; i <= currentPage + 1; i++) {
@@ -560,7 +559,7 @@ const Guests = () => {
               })()}
             </div>
             
-            {/* Next Button */}
+            {}
             <button
               onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}

@@ -23,7 +23,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // For public app, do not force redirect on 401
+    
     return Promise.reject(error);
   }
 );

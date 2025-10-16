@@ -1,5 +1,5 @@
-// Builds a Google Calendar template URL without inviting attendees
-// We intentionally do not include any email addresses.
+
+
 
 const monthMap = {
   january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
@@ -7,7 +7,7 @@ const monthMap = {
 };
 
 function tryParseStart(dateString) {
-  // Expected formats like: "June 18, 20:00" or "Jun 18, 20:00"
+  
   if (!dateString || typeof dateString !== 'string') return null;
   const cleaned = dateString.trim();
   const match = cleaned.match(/^(\w+)\s+(\d{1,2}),\s*(\d{1,2}):(\d{2})$/i);
@@ -24,7 +24,7 @@ function tryParseStart(dateString) {
   const year = now.getFullYear();
   const dt = new Date(year, month, day, hour, minute, 0);
 
-  // If parsed date already passed by > 6 months, assume next year
+  
   const sixMonthsMs = 1000 * 60 * 60 * 24 * 30 * 6;
   if (dt.getTime() < now.getTime() - sixMonthsMs) {
     dt.setFullYear(year + 1);

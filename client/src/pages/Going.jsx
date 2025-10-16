@@ -5,7 +5,7 @@ import useEventStore from "../store/eventStore";
 import useSettingsStore from "../store/settingsStore";
 import { buildGoogleCalendarUrl } from "../utils/calendar";
 
-const API_URL = import.meta.env.VITE_API_URL || ""; // vite proxies /api → backend
+const API_URL = import.meta.env.VITE_API_URL || "";
 
 const Going = ({ onClose }) => {
   const [form, setForm] = useState({ name: "", phone: "", email: "", company: "", position: "" });
@@ -33,9 +33,8 @@ const Going = ({ onClose }) => {
         going: true,
       });
       console.log("Saved:", res.data);
-      // Build Google Calendar link from active event details (no emails included)
+      
       const evt = activeEvent || {};
-      // Build human-readable date line: "June 18, 20:00"
       const start = evt?.date ? new Date(evt.date) : null;
       const dateLine = start && !Number.isNaN(start.getTime())
         ? start.toLocaleString(undefined, { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })
@@ -48,18 +47,17 @@ const Going = ({ onClose }) => {
         durationMinutes: 240,
         location: evt.address,
         description: [
-          // Header block
           logoText || subtitleText || 'EXPECT THE UNEXPECTED',
           dateLine,
           evt.title,
-          '\u00A0', // second blank line
-          // Agenda block
+          '\u00A0', 
+          
           'Event Agenda:',
           ...(Array.isArray(evt.agenda)
             ? evt.agenda.map(a => `${a.time} ${a.title}${a.subtitle ? ` (${a.subtitle})` : ''}`)
             : []),
           '\u00A0',
-          // Details block
+          
           evt.dressCode ? `${dressCodeLabel || 'Dress Code'}: ${evt.dressCode}` : '',
           evt.address ? `${addressLabel || 'Address'}: ${evt.address}` : '',
           evt.guestInfo || ''

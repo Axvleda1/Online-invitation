@@ -1,4 +1,4 @@
-// server/ip.js
+
 import os from 'os';
 
 export function getLocalIp() {
@@ -6,7 +6,7 @@ export function getLocalIp() {
   for (const list of Object.values(ifaces)) {
     for (const iface of list || []) {
       if (iface.family === 'IPv4' && !iface.internal) {
-        // Accept only private ranges
+        
         if (
           iface.address.startsWith('10.') ||
           iface.address.startsWith('192.168.') ||

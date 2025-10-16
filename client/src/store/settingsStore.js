@@ -66,11 +66,11 @@ const useSettingsStore = create((set, get) => ({
     }
   },
 
-  // Debounced updater to avoid saving on every keystroke
+  
   updateSettingsDebounced: (partial) => {
-    // Reflect optimistically in local store for instant UI feedback
+    
     set(partial);
-    // Merge into pending updates
+    
     const merged = { ...get()._pendingUpdates, ...partial };
     set({ _pendingUpdates: merged });
 
@@ -82,7 +82,7 @@ const useSettingsStore = create((set, get) => ({
         const res = await get()._save(get()._pendingUpdates);
         set({ ...get()._extract(res), _pendingUpdates: {}, _saveTimer: null });
       } catch (e) {
-        // Keep pending values; surface error but don't block typing
+        
         const msg = e.response?.data?.message || 'Failed to update settings';
         set({ error: msg, _saveTimer: null });
       }

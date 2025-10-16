@@ -1,4 +1,4 @@
-// server.js
+
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-// import authenticate from './middleware/auth.js'; // (kept if you use it)
+
 import { getLocalIp } from './ip.js';
 
 import authRoutes from './routes/auth.js';
@@ -29,7 +29,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.set('trust proxy', true);
 
-// ---------- Logging ----------
+
 app.use((req, res, next) => {
   console.log(
     `[${new Date().toISOString()}] ${req.method} ${req.originalUrl} | IP:${req.ip} | UA:${req.headers['user-agent'] || '-'} | Auth:${req.headers.authorization ? 'yes' : 'no'}`
@@ -37,12 +37,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// ---------- Network + CORS config ----------
-const LOCAL_IP = process.env.LOCAL_IP || getLocalIp(); // auto-detected if not provided
+
+const LOCAL_IP = process.env.LOCAL_IP || getLocalIp(); 
 const FRONTEND_PORT = process.env.FRONTEND_PORT || '3000';
 const BACKEND_PORT = process.env.BACKEND_PORT || '5000';
 
-// Optional extra explicit allowlist (comma-separated full origins, e.g. http://phone:3000)
+
 const EXTRA_ORIGINS = (process.env.ALLOW_ORIGINS || '')
   .split(',')
   .map(s => s.trim())
@@ -68,7 +68,7 @@ const corsOptions = {
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization','Accept'],
   origin: (origin, cb) => {
-    // No origin (curl/Postman/native apps) -> allow
+    
     if (!origin) return cb(null, true);
 
     try {
@@ -77,14 +77,14 @@ const corsOptions = {
       const port = u.port || (u.protocol === 'https:' ? '443' : '80');
 
       const allowed =
-        // local dev ports
+        
         (host === 'localhost' && port === FRONTEND_PORT) ||
         (host === '127.0.0.1' && port === FRONTEND_PORT) ||
-        // same machine LAN IP (frontend or backend)
+        
         (host === LOCAL_IP && (port === FRONTEND_PORT || port === BACKEND_PORT)) ||
-        // any private host on the same /24 as the server (good for phones/2nd PCs on LAN)
+        
         (isPrivate(host) && same24(host, LOCAL_IP)) ||
-        // explicit allowlist via env
+        
         EXTRA_ORIGINS.includes(origin);
 
       return allowed ? cb(null, true) : cb(new Error(`Not allowed by CORS: ${origin}`));
@@ -97,11 +97,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
-// ---------- Body parsers ----------
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ---------- Static /uploads with helpful headers ----------
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -121,10 +121,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   }
 }));
 
-// (Optional) also serve uploads at root for convenience
+
 app.use(express.static(path.join(__dirname, 'uploads')));
 
-// ---------- Default media fallbacks ----------
+
 const defaultMediaMap = {
   '/default-image.jpg': 'https://picsum.photos/1200/800.jpg',
   '/default-video.mp4': 'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4',
@@ -144,14 +144,14 @@ app.get(Object.keys(defaultMediaMap), (req, res) => {
   });
 });
 
-// ---------- API routes ----------
+
 app.use('/api/auth', authRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/guests', guestRoutes);
 
-// ---------- Health & debug ----------
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running', hostIp: LOCAL_IP });
 });
@@ -187,11 +187,11 @@ app.get('/api/_debug/counts', async (req, res) => {
   }
 });
 
-// ---------- 404 & error handlers ----------
+
 app.use(notFound);
 app.use(errorHandler);
 
-// ---------- DB + server start ----------
+
 const connectDB = async () => {
   try {
     mongoose.set('debug', true);

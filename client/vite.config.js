@@ -1,4 +1,3 @@
-// vite.config.ts (or .js)
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import os from 'os';
@@ -28,12 +27,11 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     hmr: {
-      host: localIP, // lets phones/2nd PCs connect to HMR over LAN
-      // protocol: 'ws', // (usually not needed; uncomment if proxies interfere)
-      // clientPort: 3000 // (rarely needed)
+      host: localIP, 
+      // protocol: 'ws',
+      // clientPort: 3000 
     },
     proxy: {
-      // Use RELATIVE paths in your app (e.g., axios to "/api")
       '/api': {
         target: `http://${localIP}:${BACKEND_PORT}`,
         changeOrigin: true,

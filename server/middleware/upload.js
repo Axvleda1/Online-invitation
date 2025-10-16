@@ -2,6 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { ALL_ALLOWED_MIME_TYPES } from '../utils/constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,14 +38,7 @@ const storage = multer.diskStorage({
 
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = [
-    
-    'video/mp4', 'video/mpeg', 'video/quicktime', 'video/x-msvideo', 'video/webm',
-    
-    'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
-  ];
-
-  if (allowedTypes.includes(file.mimetype)) {
+  if (ALL_ALLOWED_MIME_TYPES.includes(file.mimetype)) {
     cb(null, true);
   } else {
     cb(new Error('Invalid file type. Only video or image files are allowed.'), false);

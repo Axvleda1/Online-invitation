@@ -1,5 +1,5 @@
 import express from 'express';
-// Public guests endpoint: no auth middleware
+
 import guestController from '../controllers/guestController.js';
 
 const router = express.Router();

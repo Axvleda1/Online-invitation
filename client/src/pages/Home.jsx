@@ -82,7 +82,7 @@ const Home = () => {
   useEffect(() => {
     Object.values(mediaRefs.current).forEach((v) => {
       if (v && v.tagName === 'VIDEO') {
-        v.muted = true; // ensure muted for mobile autoplay
+        v.muted = true; 
         const p = v.play();
         if (p?.catch) {
           p.catch(() => {

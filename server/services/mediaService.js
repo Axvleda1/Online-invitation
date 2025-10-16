@@ -1,6 +1,7 @@
 import Media from '../models/Media.js';
 import fs from 'fs';
 import path from 'path';
+import { formatBytes } from '../utils/helpers.js';
 
 class MediaService {
   async createMedia(mediaData, file, userId) {
@@ -174,18 +175,18 @@ async updateMedia(mediaId, updateData) {
       activeMedia,
       inactiveMedia,
       totalStorage,
-      totalStorageFormatted: this.formatBytes(totalStorage),
+      totalStorageFormatted: formatBytes(totalStorage),
       recentUploads,
       storageByType: {
         video: {
           count: totalVideos,
           size: videoStorage,
-          formatted: this.formatBytes(videoStorage)
+          formatted: formatBytes(videoStorage)
         },
         image: {
           count: totalImages,
           size: imageStorage,
-          formatted: this.formatBytes(imageStorage)
+          formatted: formatBytes(imageStorage)
         },
 
       }
@@ -230,14 +231,7 @@ async updateMedia(mediaId, updateData) {
   }
 
 
-  formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return '0 Bytes';
-    const k = 2048;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-  }
+  
 
 
   async getLatestMedia(limit = 5) {

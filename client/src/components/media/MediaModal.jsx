@@ -20,9 +20,9 @@ const MediaModal = ({ media, onClose }) => {
           src={mediaUrl}
           controls
           autoPlay
-          muted            // helps autoplay on mobile
-          playsInline      // iOS inline
-          preload="metadata" // Better mobile loading
+          muted            
+          playsInline      
+          preload="metadata" 
           className="w-full max-h-[70vh] rounded-lg"
           onError={(e) => {
             console.error('Video load error:', e);
@@ -38,7 +38,7 @@ const MediaModal = ({ media, onClose }) => {
         src={mediaUrl}
         alt={media.title}
         className="w-full max-h-[70vh] object-contain rounded-lg"
-        loading="lazy" // Better mobile performance
+        loading="lazy" 
         onError={(e) => {
           console.error('Image load error:', e);
           setTimeout(() => {
